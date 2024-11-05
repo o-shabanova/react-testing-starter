@@ -1,4 +1,4 @@
-import {queryByPlaceholderText, render, screen} from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 import SearchBox from "../../src/components/SearchBox.tsx";
 import {userEvent} from "@testing-library/user-event";
 
