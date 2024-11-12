@@ -1,13 +1,8 @@
-import SearchBox from "../components/SearchBox.tsx";
-import ToastDemo from "../components/ToastDemo.tsx";
-import {Toaster} from "react-hot-toast";
+import OrderStatusSelector from "../components/OrderStatusSelector.tsx";
 
 const PlaygroundPage = () => {
     return (
-        <>
-            <ToastDemo/>
-            <Toaster/>
-        </>
+        <OrderStatusSelector onChange={console.log}/>
     );
 };
 
