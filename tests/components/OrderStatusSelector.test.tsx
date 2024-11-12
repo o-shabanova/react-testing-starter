@@ -5,30 +5,39 @@ import {userEvent} from "@testing-library/user-event";
 import {expect} from "vitest";
 
 describe('OrderStatusSelector', ()=> {
-    it('should render New as default value', ()=> {
-        render(
-            <Theme>
-                <OrderStatusSelector onChange={vi.fn()}/>
-                </Theme>
-        );
-
-        const button = screen.getByRole('combobox');
-        expect(button).toHaveTextContent(/new/i);
-
-    });
-
-    it('should render correct statuses', async ()=> {
+    const renderComponent = () => {
         render(
             <Theme>
                 <OrderStatusSelector onChange={vi.fn()}/>
             </Theme>
         );
 
-        const button = screen.getByRole('combobox');
-        const user = userEvent.setup();
-        await user.click(button);
+        return {
+            trigger: screen.getByRole('combobox'),
 
-        const options = await screen.findAllByRole('option');
+            //we can`t use below the same technique as we did above,
+            // because this code is executed when we render our component and there are
+            // no options rendered in the DOM.
+            // So we use function (lazy evaluation) there to postpone
+            // the execution of this piece of code
+            getOptions: () => screen.findAllByRole('option')
+
+        }
+    }
+    it('should render New as default value', ()=> {
+        const {trigger} = renderComponent();
+
+        expect(trigger).toHaveTextContent(/new/i);
+
+    });
+
+    it('should render correct statuses', async ()=> {
+        const {trigger, getOptions} = renderComponent();
+
+        const user = userEvent.setup();
+        await user.click(trigger);
+
+        const options = await getOptions();
         expect(options).toHaveLength(3);
         const labels = options.map(option => option.textContent);
         expect(labels).toEqual(['New', 'Processed', 'Fulfilled']);
