@@ -3,7 +3,12 @@ import ResizeObserver from "resize-observer-polyfill";
 import { server } from "./mocks/server.ts";
 import {afterAll, beforeAll} from "vitest";
 
+//this setup file is executed before each test file,
+// we start the serve, so it listens for the requests
+// to th endpoints we configured
 beforeAll(() => server.listen());
+//after each test we need to reset our handlers
+// so each test runs in a clean state
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 

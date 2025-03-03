@@ -9,6 +9,8 @@ export const handlers = [
             {id: 3, name: 'Gardening'}
         ])
     }),
+
+
     http.get('/products', () => {
         return HttpResponse.json(products)
     }),
